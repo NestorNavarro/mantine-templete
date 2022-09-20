@@ -1,15 +1,24 @@
-import { MantineProvider, Text, Button, Stack } from "@mantine/core";
+import { useState }                                          from "react";
+import { BrowserRouter }                                     from "react-router-dom";
+import { ColorScheme, ColorSchemeProvider, MantineProvider } from "@mantine/core";
+
+import Router    from "./routes";
 import { theme } from "./theme";
 
 export default function App() {
-  return (
-    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
-      <Stack align="center" mt={50}>
-        <Text size="xl" weight={500}>
-          Welcome to Mantine!
-        </Text>
-        <Button>Click the button</Button>
-      </Stack>
-    </MantineProvider>
-  );
+
+	const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
+
+	const toggleColorScheme = (value?: ColorScheme) =>
+		setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+
+	return (
+		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+			<MantineProvider theme={{ ...theme, colorScheme}} withGlobalStyles withNormalizeCSS>
+				<BrowserRouter>
+					<Router />
+				</BrowserRouter>
+			</MantineProvider>
+		</ColorSchemeProvider>
+	);
 }
