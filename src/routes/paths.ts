@@ -6,6 +6,7 @@ export const ROOTS_DASHBOARD = "/dashboard";
 
 export const PATH_ERROR_PAGE = {
 	page404 : "/404",
+	page403 : "/403",
 	page500 : "/500",
 };
 

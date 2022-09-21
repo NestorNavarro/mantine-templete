@@ -1,66 +1,56 @@
-import { Navigate, useRoutes } from "react-router-dom";
+import { lazy }                        from "react";
+import { Navigate, useRoutes, Outlet } from "react-router-dom";
 // layouts
 import DashboardLayout from "core/layout";
 // components
-// import { Guard, GuestRoute } from "components/global";
-// import LoadingScreen         from "core/LoadingScreen";
-
-
-// // ----------------------------------------------------------------------
-// const Loadable = (Component : any) => (props : any) => {
-// 	const { pathname } = useLocation();
-// 	return (
-// 		<Suspense fallback={<LoadingScreen isDashboard={pathname.includes("/dashboard")} />}>
-// 			<Component {...props} />
-// 		</Suspense>
-// 	);
-// };
+import { Loadable }   from "core/components";
+import { GuestRoute } from "components/global";
 
 // //Auth
-// const Login         = Loadable(lazy(() => import("pages/auth/Login")));
-// const Register      = Loadable(lazy(() => import("pages/auth/Register")));
-// const ResetPassword = Loadable(lazy(() => import("pages/auth/ResetPassword")));
-// const VerifyCode    = Loadable(lazy(() => import("pages/auth/VerifyCode")));
+const Login         = Loadable(lazy(() => import("pages/auth/Login")));
+const Register      = Loadable(lazy(() => import("pages/auth/Register")));
+const ResetPassword = Loadable(lazy(() => import("pages/auth/ResetPassword")));
+const VerifyCode    = Loadable(lazy(() => import("pages/auth/VerifyCode")));
 // // Dashboard
-// const Home = Loadable(lazy(() => import("pages/dashboard/Home")));
+const Home = Loadable(lazy(() => import("pages/dashboard/Home")));
 // //users
-// const UserCards   = Loadable(lazy(() => import("pages/dashboard/UserCards")));
-// const UserCreate  = Loadable(lazy(() => import("pages/dashboard/UserCreate")));
+const UserCards   = Loadable(lazy(() => import("pages/dashboard/UserCard")));
+const UserCreate  = Loadable(lazy(() => import("pages/dashboard/UserCreate")));
 // //Erros
-// const NotFound = Loadable(lazy(() => import("pages/Page404")));
-// const Page500  = Loadable(lazy(() => import("pages/Page500")));
+const NotFound = Loadable(lazy(() => import("pages/Page404")));
+const Page500  = Loadable(lazy(() => import("pages/Page500")));
 
 
 export default function Router() {
 	return useRoutes([
 		//Auth Routes
-		// {
-		// 	path     : "auth",
-		// 	element  : <GuestRoute component={Outlet} />,
-		// 	children : [
-		// 		{
-		// 			index   : true,
-		// 			element : <Navigate to="/auth/login" replace />,
-		// 		},
-		// 		{
-		// 			path    : "login",
-		// 			element : <Login />,
-		// 		},
-		// 		{
-		// 			path    : "register",
-		// 			element : <Register />,
-		// 		},
-		// 		{
-		// 			path    : "reset-password",
-		// 			element : <ResetPassword />,
-		// 		},
-		// 		{
-		// 			path    : "verify",
-		// 			element : <VerifyCode />,
-		// 		},
-		// 		{ path : "*", element : <Navigate to="/auth/login" replace />},
-		// 	],
-		// },
+		{
+			path     : "auth",
+			element  : <GuestRoute component={Outlet} />,
+			children : [
+				{
+					index   : true,
+					element : <Navigate to="/auth/login" replace />,
+				},
+				{
+					path    : "login",
+					element : <Login />,
+				},
+				{
+					path    : "register",
+					element : <Register />,
+				},
+				{
+					path    : "reset-password",
+					element : <ResetPassword />,
+				},
+				{
+					path    : "verify",
+					element : <VerifyCode />,
+				},
+				{ path : "*", element : <Navigate to="/auth/login" replace />},
+			],
+		},
 		//Auth DashBoard
 		{
 			path     : "dashboard",
@@ -68,37 +58,25 @@ export default function Router() {
 			element  : <DashboardLayout />,
 			children : [
 				{ element : <Navigate to="/dashboard/home" replace />, index : true },
-				{ path : "home", element : <>App</> },
-				// {
-				// 	path     : "user",
-				// 	children : [
-				// 		{ element : <Navigate to="/dashboard/user/cards" replace />, index : true },
-				// 		{
-				// 			path    : "cards",
-				// 			element : (
-				// 				<Guard permission="user:read">
-				// 					<UserCards />
-				// 				</Guard>
-				// 			),
-				// 		},
-				// 		{
-				// 			path    : "new",
-				// 			element : (
-				// 				<Guard permission="user:create">
-				// 					<UserCreate />
-				// 				</Guard>
-				// 			),
-				// 		},
-				// 		{
-				// 			path    : "edit/:id",
-				// 			element : (
-				// 				<Guard permission="user:update">
-				// 					<UserCreate />
-				// 				</Guard>
-				// 			),
-				// 		},
-				// 	],
-				// },
+				{ path : "home", element : <Home /> },
+				{
+					path     : "user",
+					children : [
+						{ element : <Navigate to="/dashboard/user/cards" replace />, index : true },
+						{
+							path    : "cards",
+							element : <UserCards />,
+						},
+						{
+							path    : "new",
+							element : <UserCreate />,
+						},
+						{
+							path    : "edit/:id",
+							element : <UserCreate />,
+						},
+					],
+				},
 			],
 		},
 		//Redirect
@@ -106,14 +84,13 @@ export default function Router() {
 			path    : "/",
 			element : <Navigate to={"dashboard/home"} replace />,
 		},
-		// {
-		// 	path     : "*",
-		// 	element  : <LogoOnlyLayout />,
-		// 	children : [
-		// 		{ path : "500", element : <Page500 /> },
-		// 		{ path : "404", element : <NotFound /> },
-		// 		{ path : "*", element : <Navigate to="/404" replace /> },
-		// 	],
-		// },
+		{
+			path     : "*",
+			children : [
+				{ path : "500", element : <Page500 /> },
+				{ path : "404", element : <NotFound /> },
+				{ path : "*", element : <Navigate to="/404" replace /> },
+			],
+		},
 	]);
 }
