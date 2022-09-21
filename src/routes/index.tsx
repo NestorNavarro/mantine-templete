@@ -5,6 +5,9 @@ import DashboardLayout from "core/layout";
 // components
 import { Loadable }   from "core/components";
 import { GuestRoute } from "components/global";
+import RoleBasedAuth  from "components/global/RoleBasedAuth";
+// ac
+import { USERS_PERMISSION } from "./roleBasedAuth";
 
 // //Auth
 const Login         = Loadable(lazy(() => import("pages/auth/Login")));
@@ -17,8 +20,9 @@ const Home = Loadable(lazy(() => import("pages/dashboard/Home")));
 const UserCards   = Loadable(lazy(() => import("pages/dashboard/UserCard")));
 const UserCreate  = Loadable(lazy(() => import("pages/dashboard/UserCreate")));
 // //Erros
-const NotFound = Loadable(lazy(() => import("pages/Page404")));
-const Page500  = Loadable(lazy(() => import("pages/Page500")));
+const NotFound  = Loadable(lazy(() => import("pages/Page404")));
+const Forbidden = Loadable(lazy(() => import("pages/Page403")));
+const Page500   = Loadable(lazy(() => import("pages/Page500")));
 
 
 export default function Router() {
@@ -65,15 +69,15 @@ export default function Router() {
 						{ element : <Navigate to="/dashboard/user/cards" replace />, index : true },
 						{
 							path    : "cards",
-							element : <UserCards />,
+							element : <RoleBasedAuth component={UserCards} requiredRoles={USERS_PERMISSION.cards} />,
 						},
 						{
 							path    : "new",
-							element : <UserCreate />,
+							element : <RoleBasedAuth component={UserCreate} requiredRoles={USERS_PERMISSION.new} />,
 						},
 						{
 							path    : "edit/:id",
-							element : <UserCreate />,
+							element : <RoleBasedAuth component={UserCreate} requiredRoles={USERS_PERMISSION.edit} />,
 						},
 					],
 				},
@@ -89,6 +93,7 @@ export default function Router() {
 			children : [
 				{ path : "500", element : <Page500 /> },
 				{ path : "404", element : <NotFound /> },
+				{ path : "403", element : <Forbidden /> },
 				{ path : "*", element : <Navigate to="/404" replace /> },
 			],
 		},
