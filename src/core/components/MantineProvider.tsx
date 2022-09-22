@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 //mantine
 import {
 	ColorScheme,
@@ -7,15 +7,20 @@ import {
 	MantineProvider as MantineProviderCore,
 } from "@mantine/core";
 
+import { useLocalStorage } from "@mantine/hooks";
+
 interface IMantineProvider extends MantineProviderProps {
     children: ReactElement | ReactElement[];
 }
 
 const MantineProvider = ({ children, theme } : IMantineProvider) => {
-	const [colorScheme, setColorScheme] = useState<ColorScheme>("dark");
+	const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+		key          : "color-scheme",
+		defaultValue : "dark",
+	  });
 
-	const toggleColorScheme = (value?: ColorScheme) =>
-		setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+	  const toggleColorScheme = () =>
+		setColorScheme((current) => (current === "dark" ? "light" : "dark"));
 
 	return (
 		<ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
