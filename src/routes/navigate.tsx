@@ -35,11 +35,11 @@ const navigate = [
 	  links : [
 			{
 				to    : PATH_DASHBOARD.users.cards,
-				label : "Cartas",
+				label : "Cartas Client",
 			},
 			{
 				to    : PATH_DASHBOARD.users.new,
-				label : "Nuevo",
+				label : "Nuevo Client",
 			},
 	  ],
 	},

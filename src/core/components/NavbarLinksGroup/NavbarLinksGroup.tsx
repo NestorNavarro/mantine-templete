@@ -1,11 +1,11 @@
-import { useState }                                        from "react";
-import { Group, Box, Collapse, ThemeIcon, UnstyledButton } from "@mantine/core";
-import { TablerIcon, IconChevronLeft, IconChevronRight }   from "@tabler/icons";
-
+import { useState }                from "react";
 import { NavLink as NavLinkReact } from "react-router-dom";
 
-import styles            from "./styles";
-import { useMediaQuery } from "@mantine/hooks";
+import { Group, Box, Collapse, UnstyledButton }                     from "@mantine/core";
+import { useMediaQuery }                                            from "@mantine/hooks";
+import { TablerIcon, IconChevronLeft, IconChevronRight, IconPoint } from "@tabler/icons";
+
+import styles from "./styles";
 
 interface LinksGroupProps {
     to ?: string;
@@ -26,12 +26,64 @@ export function LinksGroup({
 	isHoveredSidebar,
 	toggleActive,
 } : LinksGroupProps) {
+	const smMediaQueryMax = useMediaQuery("(max-width: 992px)");
+	const smMediaQueryMin = useMediaQuery("(min-width: 767px)");
+	return (
+		<>
+			{
+				(smMediaQueryMax && smMediaQueryMin) ?
+					isHoveredSidebar ?
+						<MainNavLink
+							to={to}
+							icon={Icon}
+							label={label}
+							links={links}
+							active={active}
+							toggleActive={toggleActive}
+						/>
+						:
+						<>
+							<NavBarLinkIcon
+								to={to ?? ""}
+								icon={Icon}
+								active={active === label}
+								onClick={() => toggleActive(label)}
+							/>
+						</>
+					:
+					<MainNavLink
+						to={to}
+						icon={Icon}
+						label={label}
+						links={links}
+						active={active}
+						toggleActive={toggleActive}
+					/>
+			}
+		</>
+	);
+}
+interface IMainNavLink {
+	to ?: string;
+    label: string;
+    active : string;
+    icon: TablerIcon;
+	// isHoveredSidebar: boolean;
+    links?: { label: string; to: string }[];
+    toggleActive : (v : string) => void;
+}
 
+const MainNavLink = ({
+	to,
+	links,
+	label,
+	active,
+	icon : Icon,
+	toggleActive,
+} : IMainNavLink) => {
 	const { classes, theme, cx } = styles();
 
 	const [opened, setOpened] = useState(false);
-
-	const smMediaQuery = useMediaQuery("(max-width: 992px)");
 
 	const hasLinks = Array.isArray(links);
 
@@ -41,7 +93,7 @@ export function LinksGroup({
 		<NavChildLink
 			link={link}
 			key={link.label}
-			className={cx(classes.link, { [classes.linkActive] : active === link.label })}
+			className={cx(classes.control, { [classes.linkActive] : active === link.label })}
 			toggleActive={toggleActive}
 		/>
 	));
@@ -57,37 +109,17 @@ export function LinksGroup({
 						>
 							<Group position="apart" spacing={0}>
 								<Box sx={{ display : "flex", alignItems : "center" }}>
-									<ThemeIcon variant="light" size={30}>
-										<Icon size={18} />
-									</ThemeIcon>
+									<Icon stroke={1.5} />
 									<Box ml="md">{label}</Box>
 								</Box>
-								{
-									smMediaQuery ?
-										<>
-											{
-												isHoveredSidebar &&
-												<ChevronIcon
-													className={classes.chevron}
-													size={14}
-													stroke={1.5}
-													style={{
-														transform : opened ? `rotate(${theme.dir === "rtl" ? -90 : 90}deg)` : "none",
-													}}
-												/>
-											}
-										</>
-										:
-										<ChevronIcon
-											className={classes.chevron}
-											size={14}
-											stroke={1.5}
-											style={{
-												transform : opened ? `rotate(${theme.dir === "rtl" ? -90 : 90}deg)` : "none",
-											}}
-										/>
-
-								}
+								<ChevronIcon
+									className={classes.chevron}
+									size={14}
+									stroke={1.5}
+									style={{
+										transform : opened ? `rotate(${theme.dir === "rtl" ? -90 : 90}deg)` : "none",
+									}}
+								/>
 							</Group>
 						</UnstyledButton>
 						<Collapse in={opened}>{items}</Collapse>
@@ -102,8 +134,28 @@ export function LinksGroup({
 			}
 		</>
 	);
-}
+};
 
+const NavBarLinkIcon = ({ icon : Icon, onClick, to, active }
+	: {
+		icon: TablerIcon;
+		onClick : () => void;
+		to : string;
+		active : boolean
+	}
+) => {
+	const { classes, cx } = styles();
+
+	return (
+		<NavLinkReact
+			to={to}
+			onClick={onClick}
+			className={cx(classes.iconLink, { [classes.active] : active })}
+		>
+			<Icon stroke={1.5} />
+		  </NavLinkReact>
+	  );
+};
 
 const NavLink = ({ link, className, toggleActive, icon : Icon } :
     {
@@ -121,9 +173,7 @@ const NavLink = ({ link, className, toggleActive, icon : Icon } :
 		>
 			<Group position="apart" spacing={0}>
 				<Box sx={{ display : "flex", alignItems : "center" }}>
-					<ThemeIcon variant="light" size={30}>
-						<Icon size={18} />
-					</ThemeIcon>
+					<Icon stroke={1.5} />
 					<Box ml="md">{link.label}</Box>
 				</Box>
 			</Group>
@@ -143,10 +193,15 @@ const NavChildLink = ({ link, className, toggleActive } :
 			className={className}
 			to={link.to}
 			key={link.label}
-			onClick={() => { toggleActive(link.label);
-			}}
+			onClick={() => toggleActive(link.label)}
 		>
-			<span>{link.label}</span>
+			<Group position="apart" spacing={0}>
+				<Box sx={{ display : "flex", alignItems : "center" }}>
+					<IconPoint stroke={1.5} />
+					<Box ml="md">{link.label}</Box>
+				</Box>
+			</Group>
 		</NavLinkReact>
 	);
 };
+

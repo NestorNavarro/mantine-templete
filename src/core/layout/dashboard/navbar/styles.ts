@@ -1,11 +1,6 @@
 import { createStyles } from "@mantine/core";
 
-const styles = createStyles((theme) => ({
-	navbar : {
-		backgroundColor : theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
-		paddingBottom   : 0,
-	},
-
+const styles = createStyles((theme,) => ({
 	header : {
 		padding      : theme.spacing.md,
 		paddingTop   : 0,

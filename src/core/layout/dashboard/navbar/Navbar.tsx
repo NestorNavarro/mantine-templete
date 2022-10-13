@@ -1,46 +1,39 @@
-import { useState } from "react";
+import React, { Fragment, useState } from "react";
 
-import { Navbar as NavBarMantine, ScrollArea, Text, Divider } from "@mantine/core";
-import { useMediaQuery }                                      from "@mantine/hooks";
+import {
+	Text,
+	Divider,
+	ScrollArea,
+	Navbar as NavBarMantine,
+} from "@mantine/core";
+
+import { useMediaQuery } from "@mantine/hooks";
 
 import { LinksGroup } from "core/components";
 import navigate       from "routes/navigate";
 import styles         from "./styles";
 
-const BASE_SIDEBAR_WITH = 300;
 const SM_SIDEBAR_WITH   = 85;
+const BASE_SIDEBAR_WITH = 400;
 
-export default function Navbar({ opened = false }) {
+const Navbar = ({ opened = false }) =>  {
 	const { classes } = styles();
 
-	const smMediaQuery = useMediaQuery("(max-width: 992px)");
-
 	const [active, setActive] = useState("");
-
-
-
 	const [smSidebarWidth, setSmSidebarWidth] = useState(SM_SIDEBAR_WITH);
+
+	const smMediaQuery = useMediaQuery("(max-width: 992px)");
 
 	const toggleActive = (key : string) => setActive(key);
 
 	const isHoveredSidebar = smSidebarWidth === BASE_SIDEBAR_WITH;
 
 	const links = navigate.map((item, index) => {
+		const isDivider = item.divider !== undefined;
 		return (
-			<div
-				key={`${index}-${item?.label ?? item.divider}`}
-				onMouseLeave={() => setSmSidebarWidth(SM_SIDEBAR_WITH)}
-				onMouseEnter={() => setSmSidebarWidth(BASE_SIDEBAR_WITH)}
-			>
+			<Fragment key={`${index}-${item?.label ?? item.divider}`} >
 				{
-					item.divider === undefined?
-						<LinksGroup
-							{...item}
-							active={active}
-							toggleActive={toggleActive}
-							isHoveredSidebar={isHoveredSidebar}
-						/>
-						:
+					isDivider ?
 						<>
 							{
 								!smMediaQuery ?
@@ -52,12 +45,17 @@ export default function Navbar({ opened = false }) {
 										<Divider my="sm" />
 							}
 						</>
-
+						:
+						<LinksGroup
+							{...item}
+							active={active}
+							toggleActive={toggleActive}
+							isHoveredSidebar={isHoveredSidebar}
+						/>
 				}
-			</div>
+			</Fragment>
 		);
 	});
-
 
 	return (
 		<NavBarMantine
@@ -66,9 +64,16 @@ export default function Navbar({ opened = false }) {
 			hiddenBreakpoint="sm"
 			width={{ xs : BASE_SIDEBAR_WITH, sm : smSidebarWidth, md : BASE_SIDEBAR_WITH, lg : BASE_SIDEBAR_WITH }}
 		>
-			<NavBarMantine.Section grow component={ScrollArea}>
+			<NavBarMantine.Section
+				grow
+				component={ScrollArea}
+				onMouseLeave={() => setSmSidebarWidth(SM_SIDEBAR_WITH)}
+				onMouseEnter={() => setSmSidebarWidth(BASE_SIDEBAR_WITH)}
+			>
 				<div className={classes.linksInner}>{links}</div>
 			</NavBarMantine.Section>
 		</NavBarMantine>
+
 	);
-}
+};
+export default React.memo(Navbar);
