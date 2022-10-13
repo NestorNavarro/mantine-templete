@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { Outlet }   from "react-router-dom";
 //mantine
-import {
-	AppShell as AppShellMantine,
-	useMantineTheme,
-} from "@mantine/core";
+import { AppShell as AppShellMantine, useMantineTheme } from "@mantine/core";
 //core
 import Navbar from "core/layout/dashboard/navbar";
 import Header from "core/layout/dashboard/header";

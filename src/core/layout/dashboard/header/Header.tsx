@@ -1,10 +1,11 @@
 import {
-	Text,
 	Burger,
 	MediaQuery,
 	useMantineTheme,
 	Header as HeaderMantine,
 } from "@mantine/core";
+
+import { Brand } from "core/components";
 
 interface Header {
     opened : boolean;
@@ -20,15 +21,16 @@ export default function Header({ opened, setOpened } : Header) {
 			<div style={{ display : "flex", alignItems : "center", height : "100%" }}>
 				<MediaQuery largerThan="sm" styles={{ display : "none" }}>
 					<Burger
-						opened={opened}
-						onClick={() => setOpened((o) => !o)}
-						size="sm"
-						color={theme.colors.gray[6]}
 						mr="xl"
+						size="sm"
+						opened={opened}
+						color={theme.colors.gray[6]}
+						onClick={() => setOpened((o) => !o)}
 					/>
 				</MediaQuery>
 
-				<Text>Application header</Text>
+				<Brand />
+
 			</div>
 		</HeaderMantine>
 	);
