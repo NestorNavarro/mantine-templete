@@ -41,7 +41,7 @@ const styles = createStyles((theme) => ({
 	},
 
 	searchContainer : {
-		flex : "70% 1 0",
+		flex : "60% 1 0",
 	},
 
 	search : {

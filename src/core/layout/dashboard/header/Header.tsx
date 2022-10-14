@@ -8,8 +8,8 @@ import {
 
 import { IconSearch } from "@tabler/icons";
 
-import { Brand, Notifications, ToggleTheme } from "core/components";
-import styles                                from "./styles";
+import { Brand, Notifications, ToggleTheme, UserDropDown } from "core/components";
+import styles                                              from "./styles";
 interface IHeader {
     opened : boolean;
     setOpened :  React.Dispatch<React.SetStateAction<boolean>>;
@@ -48,6 +48,7 @@ export default function Header({ opened, setOpened } : IHeader) {
 					<div  className={classes.rightTools}>
 						<ToggleTheme />
 						<Notifications />
+						<UserDropDown />
 					</div>
 				</div>
 			</div>
