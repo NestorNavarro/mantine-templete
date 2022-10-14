@@ -1,8 +1,11 @@
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery }   from "@mantine/hooks";
+import { useMantineTheme } from "@mantine/core";
 
 const useSmQuery = () => {
-	const isMaxWidthSm = useMediaQuery("(max-width: 992px)");
-	const isMinWidthSm = useMediaQuery("(min-width: 760px)");
+	const theme = useMantineTheme();
+
+	const isMaxWidthSm = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
+	const isMinWidthSm = useMediaQuery(`(min-width: ${theme.breakpoints.sm}px)`);
 
 	const isSmDisplay = () => (isMaxWidthSm && isMinWidthSm);
 

@@ -1,4 +1,5 @@
-import { createStyles } from "@mantine/core";
+import { createStyles }                       from "@mantine/core";
+import { BASE_SIDEBAR_WITH, SM_SIDEBAR_WITH } from "../navbar/NavbarConstants";
 
 const styles = createStyles((theme) => ({
 	header : {
@@ -6,54 +7,61 @@ const styles = createStyles((theme) => ({
 		paddingRight : theme.spacing.md,
 	},
 
+	inner : {
+		height     : 70,
+		display    : "flex",
+		alignItems : "center",
+	},
+
 	brand : {
 		display     : "flex",
 		alignItems  : "center",
 		height      : "100%",
-		width       : 350 - theme.spacing.md,
-		borderRight : `1px solid ${ theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]}`,
+		width       : "100%",
+		maxWidth    : BASE_SIDEBAR_WITH,
 		paddingLeft : theme.spacing.md,
 
-		transitionProperty       : "width",
-		transitionDuration       : "450ms",
-		transitionTimingFunction : "ease",
-		opacity                  : 1,
-
 		[theme.fn.smallerThan("md")] : {
-			width                    : 85 - theme.spacing.md,
-			paddingLeft              : theme.spacing.sm,
-			transitionProperty       : "width",
-			transitionDuration       : "400ms",
-			transitionTimingFunction : "ease",
-			opacity                  : 1,
+			maxWidth : SM_SIDEBAR_WITH,
 		},
 
 		[theme.fn.smallerThan("sm")] : {
-			border                   : "none",
-			paddingLeft              : theme.spacing.sm,
-			transitionProperty       : "border",
-			transitionDuration       : "400ms",
-			transitionTimingFunction : "ease",
-			opacity                  : 1,
+			paddingLeft : 0,
 		},
 	},
-
-	inner : {
-		height         : 70,
+	tools : {
 		display        : "flex",
-		justifyContent : "space-between",
+		width          : "100%",
 		alignItems     : "center",
+		justifyContent : "space-between",
+
+		[theme.fn.smallerThan("sm")] : {
+			justifyContent : "end",
+		},
 	},
 
-	links : {
-		[theme.fn.smallerThan("md")] : {
-			display : "none",
-		},
+	searchContainer : {
+		flex : "70% 1 0",
 	},
 
 	search : {
-		[theme.fn.smallerThan("xs")] : {
+		width                        : "55%",
+		maxWidth                     : "550px",
+		[theme.fn.smallerThan("sm")] : {
 			display : "none",
+		},
+	},
+
+
+	rightTools : {
+		display        : "flex",
+		width          : "100%",
+		alignItems     : "center",
+		gap            : "1rem",
+		justifyContent : "flex-end",
+
+		[theme.fn.smallerThan("sm")] : {
+			justifyContent : "end",
 		},
 	},
 }));

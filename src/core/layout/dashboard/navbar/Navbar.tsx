@@ -8,19 +8,22 @@ import {
 //hooks
 import { useMediaQuery } from "@mantine/hooks";
 
-import { NavLinks, NavDivider } from "core/components";
-import navigate                 from "routes/navigate";
-import NavBarIconLinks          from "core/components/NavBarIconLinks";
-import styles                   from "./styles";
+import navigate                               from "routes/navigate";
+import { NavLinks, NavDivider }               from "core/components";
+import NavBarIconLinks                        from "core/components/NavBarIconLinks";
+import { BASE_SIDEBAR_WITH, SM_SIDEBAR_WITH } from "./NavbarConstants";
+import styles                                 from "./styles";
 
-const SM_SIDEBAR_WITH   = 85;
-const BASE_SIDEBAR_WITH = 350;
+interface INavbar {
+	opened : boolean;
+}
 
-const Navbar = ({ opened = false }) =>  {
-	const { classes } = styles();
+const Navbar = ({ opened } : INavbar) =>  {
+	const { classes, theme } = styles();
 
 	const [active, setActive] = useState("");
 	const [smSidebarWidth, setSmSidebarWidth] = useState(BASE_SIDEBAR_WITH);
+
 
 	const toggleActive = (key : string) => setActive(key);
 
@@ -69,8 +72,8 @@ const Navbar = ({ opened = false }) =>  {
 		);
 	});
 
-	const isMaxWidthSm = useMediaQuery("(max-width: 992px)");
-	const isMinWidthSm = useMediaQuery("(min-width: 760px)");
+	const isMaxWidthSm = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
+	const isMinWidthSm = useMediaQuery(`(min-width: ${theme.breakpoints.sm}px)`);
 
 	const isSmDisplay = () => (isMaxWidthSm && isMinWidthSm);
 
@@ -120,12 +123,12 @@ const Navbar = ({ opened = false }) =>  {
 						hidden={!opened}
 						hiddenBreakpoint="sm"
 						width={{ base : SM_SIDEBAR_WITH }}
+						onMouseLeave={() => setSmSidebarWidth(SM_SIDEBAR_WITH)}
+						onMouseEnter={() => setSmSidebarWidth(BASE_SIDEBAR_WITH)}
 					>
 						<NavBarMantine.Section
 							grow
 							component={ScrollArea}
-							onMouseLeave={() => setSmSidebarWidth(SM_SIDEBAR_WITH)}
-							onMouseEnter={() => setSmSidebarWidth(BASE_SIDEBAR_WITH)}
 						>
 							<div className={classes.linksInner}>{iconsLinks}</div>
 						</NavBarMantine.Section>

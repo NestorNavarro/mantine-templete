@@ -10,6 +10,7 @@ export default function AppShell() {
 	const theme = useMantineTheme();
 
 	const [opened, setOpened] = useState(false);
+
 	return (
 		<AppShellMantine
 			styles={{

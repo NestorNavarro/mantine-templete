@@ -1,13 +1,15 @@
 import {
 	Burger,
+	TextInput,
 	MediaQuery,
 	useMantineTheme,
 	Header as HeaderMantine,
 } from "@mantine/core";
 
-import { Brand, ToggleTheme } from "core/components";
-import styles                 from "./styles";
+import { IconSearch } from "@tabler/icons";
 
+import { Brand, Notifications, ToggleTheme } from "core/components";
+import styles                                from "./styles";
 interface IHeader {
     opened : boolean;
     setOpened :  React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,7 +22,8 @@ export default function Header({ opened, setOpened } : IHeader) {
 	return (
 		<HeaderMantine height={70} className={classes.header}>
 			<div className={classes.inner}>
-				<div className={classes.brand}>
+
+				<div id="brand" className={classes.brand}>
 					<MediaQuery largerThan="sm" styles={{ display : "none" }}>
 						<Burger
 							mr="xl"
@@ -32,7 +35,21 @@ export default function Header({ opened, setOpened } : IHeader) {
 					</MediaQuery>
 					<Brand />
 				</div>
-				<ToggleTheme />
+
+				<div className={classes.tools}>
+					<div className={classes.searchContainer}>
+						<TextInput
+							className={classes.search}
+							icon={<IconSearch size="12px" />}
+							variant="filled"
+							placeholder={"Buscar..."}
+						/>
+					</div>
+					<div  className={classes.rightTools}>
+						<ToggleTheme />
+						<Notifications />
+					</div>
+				</div>
 			</div>
 		</HeaderMantine>
 	);
