@@ -7,11 +7,9 @@ import Navbar from "core/layout/dashboard/navbar";
 import Header from "core/layout/dashboard/header";
 
 export default function AppShell() {
-
 	const theme = useMantineTheme();
 
 	const [opened, setOpened] = useState(false);
-
 	return (
 		<AppShellMantine
 			styles={{
