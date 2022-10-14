@@ -2,7 +2,6 @@ import { useState }                from "react";
 import { NavLink as NavLinkReact } from "react-router-dom";
 
 import { Group, Box, Collapse, UnstyledButton }                     from "@mantine/core";
-import { useMediaQuery }                                            from "@mantine/hooks";
 import { TablerIcon, IconChevronLeft, IconChevronRight, IconPoint } from "@tabler/icons";
 
 import styles from "./styles";
@@ -23,44 +22,54 @@ export function LinksGroup({
 	active,
 	links,
 	icon: Icon,
-	isHoveredSidebar,
+	// isHoveredSidebar,
 	toggleActive,
 } : LinksGroupProps) {
-	const smMediaQueryMax = useMediaQuery("(max-width: 992px)");
-	const smMediaQueryMin = useMediaQuery("(min-width: 767px)");
+
+	// const smMediaQueryMax = useMediaQuery("(max-width: 992px)");
+	// const smMediaQueryMin = useMediaQuery("(min-width: 767px)");
+
 	return (
-		<>
-			{
-				(smMediaQueryMax && smMediaQueryMin) ?
-					isHoveredSidebar ?
-						<MainNavLink
-							to={to}
-							icon={Icon}
-							label={label}
-							links={links}
-							active={active}
-							toggleActive={toggleActive}
-						/>
-						:
-						<>
-							<NavBarLinkIcon
-								to={to ?? ""}
-								icon={Icon}
-								active={active === label}
-								onClick={() => toggleActive(label)}
-							/>
-						</>
-					:
-					<MainNavLink
-						to={to}
-						icon={Icon}
-						label={label}
-						links={links}
-						active={active}
-						toggleActive={toggleActive}
-					/>
-			}
-		</>
+		<MainNavLink
+			to={to}
+			icon={Icon}
+			label={label}
+			links={links}
+			active={active}
+			toggleActive={toggleActive}
+		/>
+		// <>
+		// 	{
+		// 		(smMediaQueryMax && smMediaQueryMin) ?
+		// 			isHoveredSidebar ?
+		// 				<MainNavLink
+		// 					to={to}
+		// 					icon={Icon}
+		// 					label={label}
+		// 					links={links}
+		// 					active={active}
+		// 					toggleActive={toggleActive}
+		// 				/>
+		// 				:
+		// 				<>
+		// 					<NavBarLinkIcon
+		// 						to={to ?? ""}
+		// 						icon={Icon}
+		// 						active={active === label}
+		// 						onClick={() => toggleActive(label)}
+		// 					/>
+		// 				</>
+		// 			:
+		// 			<MainNavLink
+		// 				to={to}
+		// 				icon={Icon}
+		// 				label={label}
+		// 				links={links}
+		// 				active={active}
+		// 				toggleActive={toggleActive}
+		// 			/>
+		// 	}
+		// </>
 	);
 }
 interface IMainNavLink {
@@ -136,26 +145,7 @@ const MainNavLink = ({
 	);
 };
 
-const NavBarLinkIcon = ({ icon : Icon, onClick, to, active }
-	: {
-		icon: TablerIcon;
-		onClick : () => void;
-		to : string;
-		active : boolean
-	}
-) => {
-	const { classes, cx } = styles();
 
-	return (
-		<NavLinkReact
-			to={to}
-			onClick={onClick}
-			className={cx(classes.iconLink, { [classes.active] : active })}
-		>
-			<Icon stroke={1.5} />
-		  </NavLinkReact>
-	  );
-};
 
 const NavLink = ({ link, className, toggleActive, icon : Icon } :
     {

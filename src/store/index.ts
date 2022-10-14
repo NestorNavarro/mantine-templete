@@ -6,16 +6,15 @@ import { setupListeners }  from "@reduxjs/toolkit/query";
 import localForage from "localforage";
 
 import {
+	FLUSH,
+	PAUSE,
+	PURGE,
+	PERSIST,
+	REGISTER,
+	REHYDRATE,
 	persistStore,
 	persistReducer,
-	FLUSH,
-	REHYDRATE,
-	PAUSE,
-	PERSIST,
-	PURGE,
-	REGISTER,
 } from "redux-persist";
-
 
 // Import Own Components
 import { api }     from "./api";
