@@ -29,13 +29,6 @@ const styles = createStyles((theme,) => ({
         theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
       }`,
 	},
-
-	divider : {
-		padding    : `${ theme.spacing.md }px ${ theme.spacing.md }px 5px ${ theme.spacing.md }px`,
-		fontWeight : 500,
-
-		color : theme.colorScheme === "dark" ? theme.white : theme.colors.gray[6],
-	},
 }));
 
 export default styles;

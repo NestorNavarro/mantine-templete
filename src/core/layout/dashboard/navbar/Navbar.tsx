@@ -1,19 +1,17 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import {
-	Text,
-	Divider,
 	ScrollArea,
 	Navbar as NavBarMantine,
 	Transition,
 } from "@mantine/core";
-
+//hooks
 import { useMediaQuery } from "@mantine/hooks";
 
-import { LinksGroup }  from "core/components";
-import navigate        from "routes/navigate";
-import NavBarIconLinks from "core/components/NavBarIconLinks";
-import styles          from "./styles";
+import { NavLinks, NavDivider } from "core/components";
+import navigate                 from "routes/navigate";
+import NavBarIconLinks          from "core/components/NavBarIconLinks";
+import styles                   from "./styles";
 
 const SM_SIDEBAR_WITH   = 85;
 const BASE_SIDEBAR_WITH = 350;
@@ -60,11 +58,10 @@ const Navbar = ({ opened = false }) =>  {
 						<NavDivider divider={item.divider} isHoveredSidebar={isHoveredSidebar} />
 						:
 						item.divider === undefined &&
-						<LinksGroup
+						<NavLinks
 							{...item}
 							active={active}
 							toggleActive={toggleActive}
-							isHoveredSidebar={isHoveredSidebar}
 						/>
 					}
 				</>
@@ -139,25 +136,4 @@ const Navbar = ({ opened = false }) =>  {
 	);
 };
 
-const NavDivider = ({ divider, isHoveredSidebar } : any) => {
-	const { classes } = styles();
-
-	const isMaxWidthSm = useMediaQuery("(max-width: 992px)");
-	const isMinWidthSm = useMediaQuery("(min-width: 767px)");
-
-	const isSmDisplay = () => (isMaxWidthSm && isMinWidthSm);
-	return (
-		<>
-			{
-				isSmDisplay() ?
-					isHoveredSidebar ?
-						<Text className={ classes.divider }>{ divider }</Text>
-						:
-						<Divider my="sm" />
-					:
-					<Text className={ classes.divider }>{ divider }</Text>
-			}
-		</>
-	);
-};
 export default React.memo(Navbar);

@@ -6,90 +6,23 @@ import { TablerIcon, IconChevronLeft, IconChevronRight, IconPoint } from "@table
 
 import styles from "./styles";
 
-interface LinksGroupProps {
-    to ?: string;
-    label: string;
-    active : string;
-    icon: TablerIcon;
-	isHoveredSidebar: boolean;
-    links?: { label: string; to: string }[];
-    toggleActive : (v : string) => void;
-}
-
-export function LinksGroup({
-	to,
-	label,
-	active,
-	links,
-	icon: Icon,
-	// isHoveredSidebar,
-	toggleActive,
-} : LinksGroupProps) {
-
-	// const smMediaQueryMax = useMediaQuery("(max-width: 992px)");
-	// const smMediaQueryMin = useMediaQuery("(min-width: 767px)");
-
-	return (
-		<MainNavLink
-			to={to}
-			icon={Icon}
-			label={label}
-			links={links}
-			active={active}
-			toggleActive={toggleActive}
-		/>
-		// <>
-		// 	{
-		// 		(smMediaQueryMax && smMediaQueryMin) ?
-		// 			isHoveredSidebar ?
-		// 				<MainNavLink
-		// 					to={to}
-		// 					icon={Icon}
-		// 					label={label}
-		// 					links={links}
-		// 					active={active}
-		// 					toggleActive={toggleActive}
-		// 				/>
-		// 				:
-		// 				<>
-		// 					<NavBarLinkIcon
-		// 						to={to ?? ""}
-		// 						icon={Icon}
-		// 						active={active === label}
-		// 						onClick={() => toggleActive(label)}
-		// 					/>
-		// 				</>
-		// 			:
-		// 			<MainNavLink
-		// 				to={to}
-		// 				icon={Icon}
-		// 				label={label}
-		// 				links={links}
-		// 				active={active}
-		// 				toggleActive={toggleActive}
-		// 			/>
-		// 	}
-		// </>
-	);
-}
-interface IMainNavLink {
+interface INavLinks {
 	to ?: string;
     label: string;
     active : string;
     icon: TablerIcon;
-	// isHoveredSidebar: boolean;
     links?: { label: string; to: string }[];
     toggleActive : (v : string) => void;
 }
 
-const MainNavLink = ({
+export const NavLinks = ({
 	to,
 	links,
 	label,
 	active,
 	icon : Icon,
 	toggleActive,
-} : IMainNavLink) => {
+} : INavLinks) => {
 	const { classes, theme, cx } = styles();
 
 	const [opened, setOpened] = useState(false);

@@ -1,4 +1,4 @@
-export { LinksGroup } from "./NavbarLinksGroup";
+export { NavLinks } from "./NavLinks";
 
 export { default as Logo }            from "./Logo";
 export { default as Brand }           from "./Brand";
