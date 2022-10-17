@@ -1,4 +1,5 @@
-// External Components
+import { useState } from "react";
+
 import {
 	Menu,
 	Text,
@@ -7,7 +8,7 @@ import {
 	UnstyledButton,
 	useMantineTheme,
 } from "@mantine/core";
-import { useState } from "react";
+
 import {
 	IconUser,
 	IconBuilding,
@@ -19,14 +20,14 @@ import styles from "./styles";
 
 const UserDropDown = () => {
 
-	const { classes, cx } = styles();
-	const [userMenuOpened, setUserMenuOpened] = useState(false);
 	const theme = useMantineTheme();
+	const { classes, cx } = styles();
+
+	const [userMenuOpened, setUserMenuOpened] = useState(false);
 
 	return (
 		<Group>
 			  <Menu
-				width={260}
 				position="bottom-end"
 				transition="pop-top-right"
 				onClose={() => setUserMenuOpened(false)}

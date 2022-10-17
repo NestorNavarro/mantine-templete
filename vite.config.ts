@@ -26,4 +26,8 @@ export default defineConfig({
 		open : true,
 		host : "0.0.0.0",
 	},
+	//https://github.com/vitejs/vite/issues/8644
+	esbuild : {
+		logOverride : { "this-is-undefined-in-esm" : "silent" },
+	  },
 });

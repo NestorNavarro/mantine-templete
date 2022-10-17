@@ -9,15 +9,15 @@
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "clear-all": "rm -rf build node_modules",
-    "re-start": "rm -rf build node_modules && yarn install && yarn start",
-    "re-build": "rm -rf build node_modules && yarn install && yarn build"
+    "re-start": "rm -rf build node_modules && yarn add && yarn dev",
+    "re-build": "rm -rf build node_modules && yarn add && yarn build"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@hookform/resolvers": "^2.9.8",
     "@mantine/core": "5.5.5",
     "@mantine/dates": "^5.4.0",
-    "@mantine/hooks": "5.1.0",
+    "@mantine/hooks": "5.5.5",
     "@mantine/modals": "^5.4.0",
     "@mantine/notifications": "^5.4.0",
     "@mantine/rte": "^5.4.0",

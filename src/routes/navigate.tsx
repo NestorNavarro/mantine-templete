@@ -1,6 +1,6 @@
 import {
 	IconGauge,
-	IconCalendarStats,
+	IconUsers,
 	IconPresentationAnalytics,
 } from "@tabler/icons";
 
@@ -10,13 +10,13 @@ import { PATH_DASHBOARD, ROOTS_DASHBOARD } from "./paths";
 const navigate = [
 	{
 		to    : ROOTS_DASHBOARD,
-		label : "Escritorip",
+		label : "Escritorio",
 		icon  : IconGauge,
 	},
 	{ divider : "Usuarios" },
 	{
 	  label : "Usuarios",
-	  icon  : IconCalendarStats,
+	  icon  : IconUsers,
 	  links : [
 			{
 				to    : PATH_DASHBOARD.users.cards,
@@ -28,24 +28,10 @@ const navigate = [
 			},
 	  ],
 	},
-	{ divider : "Client" },
-	{
-	  label : "Client",
-	  icon  : IconCalendarStats,
-	  links : [
-			{
-				to    : PATH_DASHBOARD.users.cards,
-				label : "Cartas Client",
-			},
-			{
-				to    : PATH_DASHBOARD.users.new,
-				label : "Nuevo Client",
-			},
-	  ],
-	},
+	{ divider : "Administración" },
 	{
 		to    : "/",
-		label : "Analytics",
+		label : "Análisis",
 		icon  : IconPresentationAnalytics,
 	},
 ];
